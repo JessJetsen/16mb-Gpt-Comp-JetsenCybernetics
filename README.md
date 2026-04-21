@@ -1,3 +1,278 @@
+One-line status
+===============
+
+The scratch trainer is no longer just a patched competition script; it is now a generic, layer-aware, schedule-ready, manifesting trainer foundation with synchronized dashboard coverage.
+
+Branchpoint Summary
+===================
+
+This scratch branch is now a generic trainer/control-surface branch, not just a competition baseline.
+It exposes the important training, architecture, optimizer, schedule, data, and export surfaces as env-driven controls,
+with early validation, log visibility, manifest output, and dashboard schema coverage.
+
+What Exists Now
+===============
+
+1. Run / manifest / provenance
+
+- `RUN_ID`
+- `MANIFEST_PATH`
+- `DASHBOARD_PROFILE_NAME`
+- manifest written beside logs by default
+- manifest includes:
+  - resolved env
+  - model shape
+  - optimizer groups
+  - control tensor init config
+  - LR multiplier config
+  - stage config
+  - data surface config
+  - quant/export policy
+  - export estimates
+  - git commit / branch
+
+2. Data surface
+
+- `DATA_PATH`
+- `TOKENIZER_PATH`
+- `TRAIN_SHARD_LIMIT`
+- `TRAIN_SHARD_OFFSET`
+- `TRAIN_SHARD_ORDER_FILE`
+- `TRAIN_SHARD_LIST`
+
+Default training data behavior is still sequential streaming through resolved shards.
+The loader now supports explicit subset and ordering controls without changing default behavior.
+
+3. Evaluation surface
+
+- `EVAL_POLICY=auto|chunked|sliding`
+- `EVAL_STRIDE`
+- `EVAL_MAX_TOKENS`
+- `EVAL_SUBSET_MODE=full|head|tail`
+- `EVAL_STRICT_FULL`
+
+This supports both strict full validation and fast local probe evaluation.
+
+4. Training schedule / curriculum
+
+- `ITERATIONS`
+- `WARMDOWN_ITERS`
+- `WARMUP_STEPS`
+- `LR_WARMUP_STEPS`
+- `MAX_WALLCLOCK_SECONDS`
+- `TARGET_GLOBAL_ACCUM`
+- single-switch curriculum:
+  - `BATCH_TOKENS_START`
+  - `BATCH_SCHEDULE_FRACTION`
+  - `SEQ_LEN_START`
+  - `SEQ_SCHEDULE_FRACTION`
+
+5. Generic multi-stage scheduler
+
+- `STAGE_FRACTIONS`
+- `STAGE_TRAIN_BATCH_TOKENS`
+- `STAGE_TRAIN_SEQ_LEN`
+- `STAGE_EMA_ENABLED`
+- `STAGE_EMA_DECAY`
+- `STAGE_TOK_LR_MUL`
+- `STAGE_HEAD_LR_MUL`
+- `STAGE_MATRIX_LR_MUL`
+- `STAGE_SCALAR_LR_MUL`
+- `STAGE_MUON_MOMENTUM`
+- `STAGE_BIGRAM_SCALE`
+
+Stage 0 is applied as the real live starting state.
+Stage switches are logged during training.
+
+6. Model shape / structure
+
+- `VOCAB_SIZE`
+- `NUM_LAYERS`
+- `MODEL_DIM`
+- `NUM_HEADS`
+- `NUM_KV_HEADS`
+- `MLP_MULT`
+- `TIE_EMBEDDINGS`
+- `TIED_EMBED_INIT_STD`
+- `LOGIT_SOFTCAP`
+- `ROPE_BASE`
+- `ROPE_DIMS`
+- `QK_GAIN_INIT`
+
+Structural modules exposed:
+
+- `BIGRAM_VOCAB_SIZE`
+- `BIGRAM_DIM`
+- `BIGRAM_SCALE_INIT`
+- `USE_SMEARGATE`
+- `SMEAR_GATE_INIT`
+- `XSA_LAST_N`
+- `XSA_LAYER_MASK`
+
+7. Control-tensor init surface
+
+- `ATTN_SCALE_INIT`
+- `ATTN_SCALE_INIT_BY_LAYER`
+- `MLP_SCALE_INIT`
+- `MLP_SCALE_INIT_BY_LAYER`
+- `RESID_MIX_INIT`
+- `RESID_MIX_INIT_BY_LAYER`
+- `Q_GAIN_INIT_BY_LAYER`
+- `SKIP_WEIGHT_INIT`
+- `SKIP_WEIGHT_INIT_BY_INDEX`
+
+Resolved values are applied before compile, logged, and stored in the manifest.
+
+8. Optimizer surface
+
+Base groups already split as:
+
+- token embeddings
+- optional untied lm head
+- matrix params on Muon
+- scalar/control params on Adam
+
+Base knobs:
+
+- `EMBED_LR`
+- `HEAD_LR`
+- `TIED_EMBED_LR`
+- `MATRIX_LR`
+- `SCALAR_LR`
+- `BETA1`
+- `BETA2`
+- `ADAM_EPS`
+- `MUON_MOMENTUM`
+- `MUON_BACKEND_STEPS`
+- `MUON_MOMENTUM_WARMUP_START`
+- `MUON_MOMENTUM_WARMUP_STEPS`
+- `GRAD_CLIP_NORM`
+- `EMA_ENABLED`
+- `EMA_DECAY`
+
+Role LR multipliers:
+
+- `TOK_LR_MUL`
+- `HEAD_LR_MUL`
+- `MATRIX_LR_MUL`
+- `SCALAR_LR_MUL`
+
+Layer/family LR multipliers:
+
+- `ATTN_Q_LR_MUL_BY_LAYER`
+- `ATTN_K_LR_MUL_BY_LAYER`
+- `ATTN_V_LR_MUL_BY_LAYER`
+- `ATTN_PROJ_LR_MUL_BY_LAYER`
+- `MLP_FC_LR_MUL_BY_LAYER`
+- `MLP_PROJ_LR_MUL_BY_LAYER`
+- `CONTROL_LR_MUL_BY_LAYER`
+
+9. Export / quant surface
+
+Profiles:
+
+- `EXPORT_PROFILE=safe|balanced|aggressive|custom`
+
+Generic export knobs:
+
+- `DEFAULT_ROLE_BITS`
+- `DEFAULT_EMBED_BITS`
+- `EMBEDDING_BITS`
+- `BIGRAM_BITS`
+- `MLP_FC_BITS`
+- `MLP_PROJ_BITS`
+- `ATTN_Q_BITS`
+- `ATTN_K_BITS`
+- `ATTN_V_BITS`
+- `ATTN_PROJ_BITS`
+- `OTHER_BITS`
+
+Per-layer export bit overrides:
+
+- `MLP_FC_BITS_BY_LAYER`
+- `MLP_PROJ_BITS_BY_LAYER`
+- `ATTN_Q_BITS_BY_LAYER`
+- `ATTN_K_BITS_BY_LAYER`
+- `ATTN_V_BITS_BY_LAYER`
+- `ATTN_PROJ_BITS_BY_LAYER`
+
+Per-layer export overrides now allow `float` entries.
+
+Float passthrough controls:
+
+- `CONTROL_TENSOR_NAME_PATTERNS`
+- `INT8_KEEP_FLOAT_FP32_NAME_PATTERNS`
+- `INT8_KEEP_FLOAT_MAX_NUMEL`
+- `INT8_KEEP_FLOAT_STORE_DTYPE`
+
+Clip controls:
+
+- `INT8_CLIP_PERCENTILE`
+- `EMBEDDING_CLIP_PERCENTILE`
+- `BIGRAM_CLIP_PERCENTILE`
+- `MLP_FC_CLIP_PERCENTILE`
+- `MLP_PROJ_CLIP_PERCENTILE`
+- `ATTN_Q_CLIP_PERCENTILE`
+- `ATTN_K_CLIP_PERCENTILE`
+- `ATTN_V_CLIP_PERCENTILE`
+- `ATTN_PROJ_CLIP_PERCENTILE`
+- `OTHER_CLIP_PERCENTILE`
+
+Export reporting now includes:
+
+- baseline tensor bytes
+- current payload bytes
+- estimated packed bytes
+- corrected packed raw estimate
+- corrected packed compressed heuristic
+
+Important Status Notes
+======================
+
+1. This is still a readable launch-point trainer, but it is now close to the upper edge of “single-file healthy”.
+   For production import, parsing/schedule/export helpers should likely move out to modules.
+
+2. The exporter still stores sub-8-bit values inside int8 tensors.
+   That means:
+   - current artifact sizes are real for the current serializer
+   - packed-size numbers are estimates, not a true bitpacked artifact size
+
+3. The branch now supports:
+   - strict/full runs
+   - local probe runs
+   - curriculum experiments
+   - structure experiments
+   - export-policy experiments
+   without requiring code edits for each test
+
+4. Dashboard schema is now expected to track every new env surface added to the runtime.
+   That rule should be kept during clean-branch import.
+
+Suggested Clean-Branch Port Order
+=================================
+
+1. Port parser utilities + manifest writer
+2. Port data/eval surface
+3. Port control-tensor init surface
+4. Port optimizer role/layer multiplier surface
+5. Port stage scheduler
+6. Port structural module surfaces
+7. Port export surface + estimates
+8. Then apply only the chosen winning/personal-best policies
+
+Freeze Readiness
+================
+
+This branch is now suitable to archive as:
+
+- scratch / learning / lab-surface branch
+
+Then re-enter cleanly from a fresh repo pull for:
+
+- best-run branch
+- competition-targeted branch
+- app-import branch
+
 # Fleming 9 Training Course Model
 
 A coherent training-plan draft based on the Fleming 9 / Parameter Golf metaphor.
