@@ -1,0 +1,576 @@
+Branch-point objective
+
+Take the current scratch trainer to a clean trainer-foundation branch point.
+
+This branch is not competition-specific.
+It is the generic high-fidelity trainer/control-surface branch that later splits into:
+
+comp/ or records/... for course-specific competition logic
+app-integration/ for SoftwareFactory model trainer import
+current branch archived under /archive/learning/
+
+Success means:
+
+the important knobs are exposed,
+they are grouped coherently,
+they are layer-aware where appropriate,
+they validate early,
+they log/manifest clearly,
+and the file stays comprehensible.
+
+Do not overfit this branch to the golf model yet.
+
+Design rules
+Expose surfaces, do not hardcode policy.
+The trainer branch should provide knobs and schedules, not encode a special strategy.
+Layer awareness where it matters.
+Any value that meaningfully differs by layer or role should have a path to per-layer override.
+Prefer grouped controls over per-tensor chaos.
+Roles first, layers second, individual tensor families third.
+Every added surface must have:
+env input
+validation
+log/manifest output
+dashboard schema entry
+No hidden magic.
+If behavior changes at runtime, it must be inspectable in logs/manifest.
+Do not blow past readability.
+train_gpt.py is intended as a launch point and should stay under the project’s readability constraint.
+
+What is already present
+
+Keep and formalize these:
+
+Training / curriculum
+ITERATIONS
+WARMDOWN_ITERS
+WARMUP_STEPS
+LR_WARMUP_STEPS
+TRAIN_BATCH_TOKENS
+BATCH_TOKENS_START
+BATCH_SCHEDULE_FRACTION
+TRAIN_SEQ_LEN
+SEQ_LEN_START
+SEQ_SCHEDULE_FRACTION
+MAX_WALLCLOCK_SECONDS
+TARGET_GLOBAL_ACCUM
+EVAL_STRIDE
+Architecture
+VOCAB_SIZE
+NUM_LAYERS
+MODEL_DIM
+NUM_HEADS
+NUM_KV_HEADS
+MLP_MULT
+TIE_EMBEDDINGS
+TIED_EMBED_INIT_STD
+LOGIT_SOFTCAP
+ROPE_BASE
+ROPE_DIMS
+QK_GAIN_INIT
+BIGRAM_VOCAB_SIZE
+BIGRAM_DIM
+USE_SMEARGATE
+XSA_LAST_N
+Optimizer / training dynamics
+token/head/scalar/matrix LR split
+Muon momentum / backend steps / warmup
+Adam beta/eps
+grad clip
+EMA on/off + decay
+Export / quant
+role-aware export bits by family
+per-layer role bits
+control-tensor float passthrough
+roundtrip validation
+stats logging by role/bits
+
+These are the spine. Do not rip them up.
+
+What still needs to be exposed before the split
+Phase 1 — finish the generic trainer surface
+A. Layer-aware control tensors
+
+Expose per-layer init and optional per-layer override surfaces for:
+
+attn_scale
+mlp_scale
+resid_mix
+q_gain
+skip_weights
+
+Current code already treats these as control tensors and keeps them special in training/export, but only q_gain_init is user-exposed at init and the rest are fixed defaults.
+
+Add:
+
+role-wide init envs
+per-layer init envs
+optional scalar/global fallback
+validation for expected layer counts/shapes
+
+Suggested knobs:
+
+ATTN_SCALE_INIT
+ATTN_SCALE_INIT_BY_LAYER
+MLP_SCALE_INIT
+MLP_SCALE_INIT_BY_LAYER
+RESID_MIX_INIT
+RESID_MIX_INIT_BY_LAYER
+Q_GAIN_INIT_BY_LAYER
+SKIP_WEIGHT_INIT
+SKIP_WEIGHT_INIT_BY_INDEX
+
+This is one of the highest-value missing pieces.
+
+B. Layer-aware structural activation
+
+Current structural features are mostly global or tail-only:
+
+BigramHash is global
+SmearGate is global
+XSA is last_n only
+
+Expose controlled structural targeting:
+
+XSA_LAYER_MASK
+XSA_LAST_N remains as shorthand
+Bigram projection/gate init knobs
+Smear gate init knobs
+optional enable masks where sane
+
+Suggested knobs:
+
+BIGRAM_SCALE_INIT
+SMEAR_GATE_INIT
+XSA_LAYER_MASK=0,0,0,1,1,1,1,1,1
+
+Keep this generic. Do not make hole schedules yet.
+
+C. LR multipliers by optimizer role
+
+Current optimizer groups already exist:
+
+token embeddings on Adam
+optional lm_head on Adam
+block matrices on Muon
+scalar/control params on Adam
+
+Expose explicit runtime multipliers so later branches can build schedules without rewriting the optimizer split.
+
+Suggested knobs:
+
+TOK_LR_MUL
+HEAD_LR_MUL
+MATRIX_LR_MUL
+SCALAR_LR_MUL
+
+And layer/family versions:
+
+ATTN_Q_LR_MUL_BY_LAYER
+ATTN_K_LR_MUL_BY_LAYER
+ATTN_V_LR_MUL_BY_LAYER
+ATTN_PROJ_LR_MUL_BY_LAYER
+MLP_FC_LR_MUL_BY_LAYER
+MLP_PROJ_LR_MUL_BY_LAYER
+CONTROL_LR_MUL_BY_LAYER
+
+This is the bridge to future course play without encoding course play now.
+
+D. True manifest export
+
+Do this before more features.
+
+Add one machine-readable run manifest written beside logs, containing:
+
+resolved env
+resolved model shape
+resolved optimizer groups
+resolved per-layer init values
+resolved quant policy
+active dataset/train/val paths
+git commit / branch if available
+dashboard profile name if applicable
+
+JSON is fine.
+
+This will save you later.
+
+Phase 2 — add generic schedule primitives
+
+Do not jump straight to golf.
+Add reusable schedule machinery.
+
+A. Multi-stage scheduler
+
+Right now seq and batch are single-switch only.
+
+Replace or extend with a generic staged scheduler that can drive:
+
+seq len
+batch tokens
+EMA enable/decay
+LR multipliers
+Muon momentum
+feature gates
+
+Suggested format:
+
+STAGE_FRACTIONS=0.0,0.2,0.5,0.8,1.0
+per-surface lists of equal length
+
+Or compact JSON env/file if needed.
+
+Do not yet attach “hole semantics.”
+Just make stages work.
+
+B. Schedule surfaces for generic trainer values
+
+Once stages exist, expose stage-wise controls for:
+
+TRAIN_BATCH_TOKENS
+TRAIN_SEQ_LEN
+EMA_ENABLED
+EMA_DECAY
+TOK_LR_MUL
+HEAD_LR_MUL
+MATRIX_LR_MUL
+SCALAR_LR_MUL
+MUON_MOMENTUM
+BIGRAM_SCALE
+SMEAR_GATE_BIAS or equivalent
+
+This is enough to cover most future “clubs and swings.”
+
+C. Layer-mask parser utility
+
+You are going to need this repeatedly.
+
+One parser for:
+
+by-layer scalar lists
+binary masks
+role masks
+tail/head shorthand
+mirrored-pair shorthand later
+
+Keep it generic and reused everywhere.
+
+Phase 3 — data surface exposure
+
+This is important for your future branch and app trainer.
+
+A. Shard selection / ordering
+
+Current loader streams sequentially through sorted shards forever. That is good baseline behavior, but data order is not exposed as a surface.
+
+Expose:
+
+train shard subset
+explicit shard order file/list
+optional repeat behavior
+optional phase/stage shard groups later
+
+Suggested knobs:
+
+TRAIN_SHARD_LIMIT
+TRAIN_SHARD_OFFSET
+TRAIN_SHARD_ORDER_FILE
+TRAIN_SHARD_LIST
+
+Keep default behavior unchanged.
+
+B. Validation control surface
+
+Current validation supports full-window or sliding-window via EVAL_STRIDE.
+
+Expose:
+
+eval policy name
+eval max tokens override for quick probes
+validation subset mode for local dev
+strict/full challenge mode flag
+
+This helps both lab use and app integration.
+
+Phase 4 — export branch-point completion
+A. Finish role-aware export surface
+
+Current role-aware export is useful but incomplete because sub-8-bit is still stored in int8 tensors for sensitivity testing.
+
+Before branching, expose the remaining generic knobs:
+
+clip percentile by role
+max passthrough size
+passthrough dtype
+per-role/per-layer float override
+report estimated packed size even before real packer exists
+B. Optional export profiles
+
+Add named presets:
+
+export_safe
+export_balanced
+export_aggressive
+
+These are app-friendly and competition-friendly later.
+
+Surfaces that should exist by the branch point
+
+This is the “full dials / knobs / levers” checklist.
+
+1. Run / infra
+run id
+seed
+wallclock cap
+accumulation
+log cadence
+val cadence
+manifest path / output mode
+2. Data
+dataset path
+tokenizer path
+shard subset/order controls
+eval mode / eval subset
+3. Shape
+vocab size
+layers
+dim
+heads / kv heads
+mlp mult
+tie embeddings
+rope base / dims
+logit softcap
+4. Feature modules
+bigram on/off
+bigram vocab/dim
+bigram scale init / schedule-ready surface
+smear on/off
+smear gate init / schedule-ready surface
+xsa shorthand + explicit mask
+5. Control tensors
+attn scale init
+mlp scale init
+resid mix init
+q gain init
+skip weight init
+all with per-layer overrides
+6. Optimizer
+all existing base LR/beta/eps/momentum knobs
+per-role LR multipliers
+per-family/layer LR multipliers
+EMA enable/decay
+grad clip
+7. Curriculum / schedule
+warmup
+lr warmup
+seq schedule
+batch schedule
+generic stage machinery
+stage-wise role multipliers
+stage-wise feature gates
+8. Export
+role bits
+layer bits
+float passthrough rules
+clip percentile
+export profile
+quant stats
+manifest copy of resolved export policy
+9. Dashboard/schema
+
+Every env-facing surface above needs a schema entry, type, default, description, and validation hints.
+
+What not to do on this branch
+Do not encode golf-course hole logic.
+Do not build bespoke competition-only heuristics.
+Do not make each tensor independently schedulable unless grouping fails.
+Do not let dashboard/schema drift away from trainer reality.
+Do not exceed readability for the main file; move helper parsing/schedule utilities out if needed. The current project note explicitly treats train_gpt.py as a readable launch point, not a junk drawer.
+Recommended implementation order
+Sprint 1
+manifest export
+layer-mask/list parsing utilities
+per-layer control-tensor init surfaces
+schema updates
+Sprint 2
+role LR multipliers
+family/layer LR multipliers
+explicit XSA layer mask
+Bigram/Smear init surfaces
+schema updates
+Sprint 3
+generic multi-stage scheduler
+stage-wise seq/batch/EMA/LR multipliers
+logs showing active stage and resolved values
+schema updates
+Sprint 4
+shard subset/order controls
+eval subset / policy surface
+export profile cleanup
+estimated packed-size reporting
+branch freeze prep
+Branch-point acceptance criteria
+
+We branch when:
+
+Every major trainer surface is env-configurable.
+Every major surface is reflected in dashboard schema.
+Layer-aware values exist for control tensors and export bits.
+Generic staged scheduling exists for at least seq, batch, EMA, and LR multipliers.
+Manifest export records resolved runtime configuration.
+Data order/subset is externally controllable.
+Default run still works cleanly.
+train_gpt.py remains readable enough to hand to a newcomer without apology.
+One-line summary for Codex
+
+Build this branch into a generic, high-fidelity, layer-aware trainer foundation with clean manifesting, generic stage scheduling, exposed control-tensor surfaces, optimizer-role/family multipliers, and data-order controls; do not encode competition/golf policy yet.
+
+If you want, I can turn that into a tighter “Codex task brief” version with imperative bullets only.
+
+please provide the brief
+
+
+brief
+=====
+
+
+Here’s the brief to hand to Codex.
+
+Build the current scratch trainer to a clean generic trainer branch point. This branch is not competition-specific and should not encode golf/course logic yet. The goal is to expose the full relevant training/control surface in a clean, layer-aware, schedule-ready way so we can later split into two branches: competition course model and app integration model trainer. Preserve the current working surfaces already present in train_gpt.py, including the existing batch/seq curriculum knobs, optimizer split, EMA, BigramHash, SmearGate, XSA tail control, role-aware export bits, validation behavior, and strict shape validation. Keep the trainer readable and aligned with the project constraint that train_gpt.py remains a clear launch point rather than an overgrown patch pile.
+
+Core objective
+
+Expose as many meaningful trainer knobs/levers/dials as possible, with:
+
+env surface
+validation
+logging/manifest output
+dashboard/schema entry
+
+Prefer grouped controls over per-tensor chaos. Add layer awareness where it matters. Expose surfaces, do not hardcode policy.
+
+Do first
+Add a machine-readable run manifest written beside logs.
+Include:
+resolved env vars
+resolved model shape
+resolved optimizer groups
+resolved control-tensor init values
+resolved quant/export policy
+dataset/tokenizer paths
+shard selection/order settings
+git commit / branch if available
+dashboard profile name if available
+Add reusable parsing utilities for:
+per-layer scalar lists
+masks
+shorthand/fallback parsing
+validation with useful errors
+
+Expose layer-aware control tensor init surfaces for:
+
+attn_scale
+mlp_scale
+resid_mix
+q_gain
+skip_weights
+
+Add:
+
+global init knobs
+per-layer override knobs
+validation for correct counts/shapes
+manifest logging
+schema entries
+Next
+
+Expose optimizer role multipliers cleanly:
+
+token/embed
+head
+matrix/Muon
+scalar/control
+
+Then expose layer/family-aware multiplier overrides for:
+
+attn_q
+attn_k
+attn_v
+attn_proj
+mlp_fc
+mlp_proj
+control tensors
+Expose structural feature init/mask surfaces:
+explicit XSA_LAYER_MASK in addition to XSA_LAST_N
+BIGRAM_SCALE_INIT
+SMEAR_GATE_INIT
+any other safe init surfaces for these modules
+validation + manifest + schema
+Then
+
+Add a generic multi-stage scheduler.
+This is stage machinery only, not course logic.
+It should be able to drive at least:
+
+batch tokens
+seq len
+EMA enabled/decay
+optimizer role multipliers
+Muon momentum
+feature gates/scales where practical
+
+Requirements:
+
+clean format
+strict validation
+resolved active stage logged during training
+schema support
+Extend current single-switch curriculum so staged control can later replace or subsume it, while keeping current simple behavior working.
+Data surface
+Expose shard selection / ordering controls without changing default behavior:
+shard limit
+shard offset
+explicit shard list or order file
+manifest logging
+schema support
+Expose validation surface more fully:
+eval policy name
+optional eval subset / quick-probe control
+strict/full validation mode flag
+schema support
+Export surface
+Finish the generic role-aware export surface:
+per-role clip percentile
+passthrough max numel
+passthrough dtype
+optional per-role/per-layer float override
+estimated packed-size reporting even before real packed sub-8-bit storage exists
+manifest logging
+schema support
+Add optional named export profiles:
+safe
+balanced
+aggressive
+Rules
+Do not encode competition heuristics or golf-course policy on this branch.
+Do not make every tensor independently schedulable unless grouping proves insufficient.
+Keep defaults stable and current runs working.
+Every new env-facing feature must be added to dashboard schema.
+Move helper logic out of train_gpt.py if needed to preserve readability.
+Recommended implementation order
+Sprint 1: manifest + parsing utilities + control tensor init surfaces
+Sprint 2: optimizer role/family multipliers + XSA mask + Bigram/Smear init surfaces
+Sprint 3: generic staged scheduler + stage logging + schema updates
+Sprint 4: shard order/subset + eval surface + export profile cleanup + packed-size estimates
+Branch-point acceptance criteria
+
+We branch when:
+
+major trainer surfaces are env-configurable
+dashboard/schema reflects them
+control tensors have layer-aware init surfaces
+generic stage scheduling exists for key trainer values
+manifest export records resolved runtime configuration
+shard order/subset is controllable
+default run still works cleanly
+trainer remains readable and suitable as a reusable foundation

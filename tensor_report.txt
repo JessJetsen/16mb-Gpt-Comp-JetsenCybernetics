@@ -1,0 +1,127 @@
+Total parameter bytes (current dtype): 68,239,648
+============================================================================================================================================
+       bytes         numel  ndim  optimizer_group       export_mode                     name
+============================================================================================================================================
+   2,097,152       524,288     2  token_embedding       quantize_int8_per_row           tok_emb.weight (1024, 512)
+   2,097,152       524,288     2  block_matrix_muon     quantize_int8_per_row           blocks.0.mlp.fc.weight (1024, 512)
+   2,097,152       524,288     2  block_matrix_muon     quantize_int8_per_row           blocks.0.mlp.proj.weight (512, 1024)
+   2,097,152       524,288     2  block_matrix_muon     quantize_int8_per_row           blocks.1.mlp.fc.weight (1024, 512)
+   2,097,152       524,288     2  block_matrix_muon     quantize_int8_per_row           blocks.1.mlp.proj.weight (512, 1024)
+   2,097,152       524,288     2  block_matrix_muon     quantize_int8_per_row           blocks.2.mlp.fc.weight (1024, 512)
+   2,097,152       524,288     2  block_matrix_muon     quantize_int8_per_row           blocks.2.mlp.proj.weight (512, 1024)
+   2,097,152       524,288     2  block_matrix_muon     quantize_int8_per_row           blocks.3.mlp.fc.weight (1024, 512)
+   2,097,152       524,288     2  block_matrix_muon     quantize_int8_per_row           blocks.3.mlp.proj.weight (512, 1024)
+   2,097,152       524,288     2  block_matrix_muon     quantize_int8_per_row           blocks.4.mlp.fc.weight (1024, 512)
+   2,097,152       524,288     2  block_matrix_muon     quantize_int8_per_row           blocks.4.mlp.proj.weight (512, 1024)
+   2,097,152       524,288     2  block_matrix_muon     quantize_int8_per_row           blocks.5.mlp.fc.weight (1024, 512)
+   2,097,152       524,288     2  block_matrix_muon     quantize_int8_per_row           blocks.5.mlp.proj.weight (512, 1024)
+   2,097,152       524,288     2  block_matrix_muon     quantize_int8_per_row           blocks.6.mlp.fc.weight (1024, 512)
+   2,097,152       524,288     2  block_matrix_muon     quantize_int8_per_row           blocks.6.mlp.proj.weight (512, 1024)
+   2,097,152       524,288     2  block_matrix_muon     quantize_int8_per_row           blocks.7.mlp.fc.weight (1024, 512)
+   2,097,152       524,288     2  block_matrix_muon     quantize_int8_per_row           blocks.7.mlp.proj.weight (512, 1024)
+   2,097,152       524,288     2  block_matrix_muon     quantize_int8_per_row           blocks.8.mlp.fc.weight (1024, 512)
+   2,097,152       524,288     2  block_matrix_muon     quantize_int8_per_row           blocks.8.mlp.proj.weight (512, 1024)
+   1,048,576       262,144     2  block_matrix_muon     quantize_int8_per_row           blocks.0.attn.c_q.weight (512, 512)
+   1,048,576       262,144     2  block_matrix_muon     quantize_int8_per_row           blocks.0.attn.proj.weight (512, 512)
+   1,048,576       262,144     2  block_matrix_muon     quantize_int8_per_row           blocks.1.attn.c_q.weight (512, 512)
+   1,048,576       262,144     2  block_matrix_muon     quantize_int8_per_row           blocks.1.attn.proj.weight (512, 512)
+   1,048,576       262,144     2  block_matrix_muon     quantize_int8_per_row           blocks.2.attn.c_q.weight (512, 512)
+   1,048,576       262,144     2  block_matrix_muon     quantize_int8_per_row           blocks.2.attn.proj.weight (512, 512)
+   1,048,576       262,144     2  block_matrix_muon     quantize_int8_per_row           blocks.3.attn.c_q.weight (512, 512)
+   1,048,576       262,144     2  block_matrix_muon     quantize_int8_per_row           blocks.3.attn.proj.weight (512, 512)
+   1,048,576       262,144     2  block_matrix_muon     quantize_int8_per_row           blocks.4.attn.c_q.weight (512, 512)
+   1,048,576       262,144     2  block_matrix_muon     quantize_int8_per_row           blocks.4.attn.proj.weight (512, 512)
+   1,048,576       262,144     2  block_matrix_muon     quantize_int8_per_row           blocks.5.attn.c_q.weight (512, 512)
+   1,048,576       262,144     2  block_matrix_muon     quantize_int8_per_row           blocks.5.attn.proj.weight (512, 512)
+   1,048,576       262,144     2  block_matrix_muon     quantize_int8_per_row           blocks.6.attn.c_q.weight (512, 512)
+   1,048,576       262,144     2  block_matrix_muon     quantize_int8_per_row           blocks.6.attn.proj.weight (512, 512)
+   1,048,576       262,144     2  block_matrix_muon     quantize_int8_per_row           blocks.7.attn.c_q.weight (512, 512)
+   1,048,576       262,144     2  block_matrix_muon     quantize_int8_per_row           blocks.7.attn.proj.weight (512, 512)
+   1,048,576       262,144     2  block_matrix_muon     quantize_int8_per_row           blocks.8.attn.c_q.weight (512, 512)
+   1,048,576       262,144     2  block_matrix_muon     quantize_int8_per_row           blocks.8.attn.proj.weight (512, 512)
+     524,288       131,072     2  block_matrix_muon     quantize_int8_per_row           blocks.0.attn.c_k.weight (256, 512)
+     524,288       131,072     2  block_matrix_muon     quantize_int8_per_row           blocks.0.attn.c_v.weight (256, 512)
+     524,288       131,072     2  block_matrix_muon     quantize_int8_per_row           blocks.1.attn.c_k.weight (256, 512)
+     524,288       131,072     2  block_matrix_muon     quantize_int8_per_row           blocks.1.attn.c_v.weight (256, 512)
+     524,288       131,072     2  block_matrix_muon     quantize_int8_per_row           blocks.2.attn.c_k.weight (256, 512)
+     524,288       131,072     2  block_matrix_muon     quantize_int8_per_row           blocks.2.attn.c_v.weight (256, 512)
+     524,288       131,072     2  block_matrix_muon     quantize_int8_per_row           blocks.3.attn.c_k.weight (256, 512)
+     524,288       131,072     2  block_matrix_muon     quantize_int8_per_row           blocks.3.attn.c_v.weight (256, 512)
+     524,288       131,072     2  block_matrix_muon     quantize_int8_per_row           blocks.4.attn.c_k.weight (256, 512)
+     524,288       131,072     2  block_matrix_muon     quantize_int8_per_row           blocks.4.attn.c_v.weight (256, 512)
+     524,288       131,072     2  block_matrix_muon     quantize_int8_per_row           blocks.5.attn.c_k.weight (256, 512)
+     524,288       131,072     2  block_matrix_muon     quantize_int8_per_row           blocks.5.attn.c_v.weight (256, 512)
+     524,288       131,072     2  block_matrix_muon     quantize_int8_per_row           blocks.6.attn.c_k.weight (256, 512)
+     524,288       131,072     2  block_matrix_muon     quantize_int8_per_row           blocks.6.attn.c_v.weight (256, 512)
+     524,288       131,072     2  block_matrix_muon     quantize_int8_per_row           blocks.7.attn.c_k.weight (256, 512)
+     524,288       131,072     2  block_matrix_muon     quantize_int8_per_row           blocks.7.attn.c_v.weight (256, 512)
+     524,288       131,072     2  block_matrix_muon     quantize_int8_per_row           blocks.8.attn.c_k.weight (256, 512)
+     524,288       131,072     2  block_matrix_muon     quantize_int8_per_row           blocks.8.attn.c_v.weight (256, 512)
+       8,192         2,048     2  block_scalar_adam     keep_float (small_float<= 65536)  skip_weights (4, 512)
+       4,096         1,024     2  block_scalar_adam     keep_float (small_float<= 65536)  blocks.0.resid_mix (2, 512)
+       4,096         1,024     2  block_scalar_adam     keep_float (small_float<= 65536)  blocks.1.resid_mix (2, 512)
+       4,096         1,024     2  block_scalar_adam     keep_float (small_float<= 65536)  blocks.2.resid_mix (2, 512)
+       4,096         1,024     2  block_scalar_adam     keep_float (small_float<= 65536)  blocks.3.resid_mix (2, 512)
+       4,096         1,024     2  block_scalar_adam     keep_float (small_float<= 65536)  blocks.4.resid_mix (2, 512)
+       4,096         1,024     2  block_scalar_adam     keep_float (small_float<= 65536)  blocks.5.resid_mix (2, 512)
+       4,096         1,024     2  block_scalar_adam     keep_float (small_float<= 65536)  blocks.6.resid_mix (2, 512)
+       4,096         1,024     2  block_scalar_adam     keep_float (small_float<= 65536)  blocks.7.resid_mix (2, 512)
+       4,096         1,024     2  block_scalar_adam     keep_float (small_float<= 65536)  blocks.8.resid_mix (2, 512)
+       2,048           512     1  block_scalar_adam     keep_float (small_float<= 65536)  blocks.0.attn_scale (512,)
+       2,048           512     1  block_scalar_adam     keep_float (small_float<= 65536)  blocks.0.mlp_scale (512,)
+       2,048           512     1  block_scalar_adam     keep_float (small_float<= 65536)  blocks.1.attn_scale (512,)
+       2,048           512     1  block_scalar_adam     keep_float (small_float<= 65536)  blocks.1.mlp_scale (512,)
+       2,048           512     1  block_scalar_adam     keep_float (small_float<= 65536)  blocks.2.attn_scale (512,)
+       2,048           512     1  block_scalar_adam     keep_float (small_float<= 65536)  blocks.2.mlp_scale (512,)
+       2,048           512     1  block_scalar_adam     keep_float (small_float<= 65536)  blocks.3.attn_scale (512,)
+       2,048           512     1  block_scalar_adam     keep_float (small_float<= 65536)  blocks.3.mlp_scale (512,)
+       2,048           512     1  block_scalar_adam     keep_float (small_float<= 65536)  blocks.4.attn_scale (512,)
+       2,048           512     1  block_scalar_adam     keep_float (small_float<= 65536)  blocks.4.mlp_scale (512,)
+       2,048           512     1  block_scalar_adam     keep_float (small_float<= 65536)  blocks.5.attn_scale (512,)
+       2,048           512     1  block_scalar_adam     keep_float (small_float<= 65536)  blocks.5.mlp_scale (512,)
+       2,048           512     1  block_scalar_adam     keep_float (small_float<= 65536)  blocks.6.attn_scale (512,)
+       2,048           512     1  block_scalar_adam     keep_float (small_float<= 65536)  blocks.6.mlp_scale (512,)
+       2,048           512     1  block_scalar_adam     keep_float (small_float<= 65536)  blocks.7.attn_scale (512,)
+       2,048           512     1  block_scalar_adam     keep_float (small_float<= 65536)  blocks.7.mlp_scale (512,)
+       2,048           512     1  block_scalar_adam     keep_float (small_float<= 65536)  blocks.8.attn_scale (512,)
+       2,048           512     1  block_scalar_adam     keep_float (small_float<= 65536)  blocks.8.mlp_scale (512,)
+          32             8     1  block_scalar_adam     keep_float (small_float<= 65536)  blocks.0.attn.q_gain (8,)
+          32             8     1  block_scalar_adam     keep_float (small_float<= 65536)  blocks.1.attn.q_gain (8,)
+          32             8     1  block_scalar_adam     keep_float (small_float<= 65536)  blocks.2.attn.q_gain (8,)
+          32             8     1  block_scalar_adam     keep_float (small_float<= 65536)  blocks.3.attn.q_gain (8,)
+          32             8     1  block_scalar_adam     keep_float (small_float<= 65536)  blocks.4.attn.q_gain (8,)
+          32             8     1  block_scalar_adam     keep_float (small_float<= 65536)  blocks.5.attn.q_gain (8,)
+          32             8     1  block_scalar_adam     keep_float (small_float<= 65536)  blocks.6.attn.q_gain (8,)
+          32             8     1  block_scalar_adam     keep_float (small_float<= 65536)  blocks.7.attn.q_gain (8,)
+          32             8     1  block_scalar_adam     keep_float (small_float<= 65536)  blocks.8.attn.q_gain (8,)
+
+Top tensors by bytes:
+   2,097,152  tok_emb.weight (1024, 512)  -> quantize_int8_per_row
+   2,097,152  blocks.0.mlp.fc.weight (1024, 512)  -> quantize_int8_per_row
+   2,097,152  blocks.0.mlp.proj.weight (512, 1024)  -> quantize_int8_per_row
+   2,097,152  blocks.1.mlp.fc.weight (1024, 512)  -> quantize_int8_per_row
+   2,097,152  blocks.1.mlp.proj.weight (512, 1024)  -> quantize_int8_per_row
+   2,097,152  blocks.2.mlp.fc.weight (1024, 512)  -> quantize_int8_per_row
+   2,097,152  blocks.2.mlp.proj.weight (512, 1024)  -> quantize_int8_per_row
+   2,097,152  blocks.3.mlp.fc.weight (1024, 512)  -> quantize_int8_per_row
+   2,097,152  blocks.3.mlp.proj.weight (512, 1024)  -> quantize_int8_per_row
+   2,097,152  blocks.4.mlp.fc.weight (1024, 512)  -> quantize_int8_per_row
+   2,097,152  blocks.4.mlp.proj.weight (512, 1024)  -> quantize_int8_per_row
+   2,097,152  blocks.5.mlp.fc.weight (1024, 512)  -> quantize_int8_per_row
+   2,097,152  blocks.5.mlp.proj.weight (512, 1024)  -> quantize_int8_per_row
+   2,097,152  blocks.6.mlp.fc.weight (1024, 512)  -> quantize_int8_per_row
+   2,097,152  blocks.6.mlp.proj.weight (512, 1024)  -> quantize_int8_per_row
+   2,097,152  blocks.7.mlp.fc.weight (1024, 512)  -> quantize_int8_per_row
+   2,097,152  blocks.7.mlp.proj.weight (512, 1024)  -> quantize_int8_per_row
+   2,097,152  blocks.8.mlp.fc.weight (1024, 512)  -> quantize_int8_per_row
+   2,097,152  blocks.8.mlp.proj.weight (512, 1024)  -> quantize_int8_per_row
+   1,048,576  blocks.0.attn.c_q.weight (512, 512)  -> quantize_int8_per_row
+
+Bytes by optimizer group:
+  66,060,288  block_matrix_muon
+   2,097,152  token_embedding
+      82,208  block_scalar_adam
+
+Bytes by export mode:
+  68,157,440  quantize_int8_per_row
+      82,208  keep_float (small_float<= 65536)

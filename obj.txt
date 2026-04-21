@@ -1,0 +1,127 @@
+
+The objective is par and is achieved with 3 rules:
+Par 4 holes should use the drive for setup, and hit the green on shot 2
+Par 3 holes should use the drive to hit the green
+2 putt every hole
+
+Hole 1 - 405 steps - h3 - long hinge with setup (405 irl) (1005 TR)
+Shot 1 Step 0 - 255 
+is all out for an average golfer with a heavy driver, #1 / 3 likely for most people straight and true for 230 - 260 steps 
+Shot 2 Step 256 - 400
+mid iron To green edge (pick shot & spot)
+Shot 3 Putt 1 - Step 401 - 404
+on green then putt to within 3 ft - setup finish hole
+Shot 4  Putt 2 - Step 405
+within 3 ft then finish hole
+
+Hole 2 - 140 steps - h6 (545 irl) (1510 tr)
+Shot 1 Step 406 - 540
+Mid iron / short drive- On Green (pick shot & spot)
+Shot 2 Putt 1 - Step 541 - 544
+on green then putt to within 3 ft - setup finish hole
+Shot 3 Putt 2 - Step 545
+within 3 ft then finish hole
+
+Hole 3 - 195 steps - h7 (740 irl) (1705 tr)
+Shot 1 Step 546 - 735
+long iron / 75% drive - On Green (pick shot & spot)
+Shot 2 Step 736 - 739
+Putt 1 - on green then putt to within 3 ft - setup finish hole
+Shot 3 Step 740
+Putt 2 - within 3 ft then finish hole
+
+Hole 4 - 140 steps - h8 (880 irl) (1845 tr)
+Shot 1 - Step 741 - 875
+short drive / mid iron / heavy short iron - On Green (pick shot & spot)
+Shot 2 Putt 1 - Step 876 - 879 
+on green then putt to within 3 ft - setup finish hole
+Shot 3 Putt 2 - Step 880
+within 3 ft then finish hole
+
+Hole 5 - 235 steps - h2 (1115 irl) (660 tr)
+Shot 1 - Step 881 - 1110
+Reg Drive - heavy long iron On Green (pick shot & spot)
+Shot 2 Putt 1 - Step 1111 - 1114
+on green then putt to within 3 ft - setup finish hole
+Shot 3 Putt 2 - Step 1115
+within 3 ft then finish hole
+
+Hole 6 - 200 steps - h5 (1315 irl) (1370 tr)
+Shot 1 - 
+80% drive / long iron On Green (pick shot & spot)
+Shot 2 Putt 1 - 
+on green then putt to within 3 ft - setup finish hole
+Shot 3 Putt 2 - 1315
+within 3 ft then finish hole
+
+Hole 7 - 425 steps - h1 (1740 irl) (425 tr)
+Shot 1 - 
+240 - 260 all out to fairway hinge (pick shot & spot)
+Shot 2 - 
+160 - 180 reg Long iron or heavy mid iron to green (pick shot & spot)
+Shot 3 Putt 1 - 
+on green then putt to within 3 ft - setup finish hole
+Shot 4 Putt 2 - 
+within 3 ft then finish hole
+
+Hole 8 - 260 steps - h9 - birdy/eagle potential (2000 irl) (2165 tr)
+Shot 1 - 
+Reg Drive , heavy long iron - 235 for setup (pick shot & spot)
+Shot 2 - 
+50 - 75% short iron short chip to green (pick shot & spot)
+Shot 3 Putt 1 - 
+on green then putt to within 3 ft - setup finish hole
+Shot 4 Putt 2 - 
+within 3 ft then finish hole
+
+Hole 9 - 165 steps - h4 (2165 irl) (1170 tr)
+Shot 1 - 
+Short Drive, 75% long iron, , mid iron, heavy short iron - On Green (pick shot & spot)
+Shot 2 Putt 1 - 
+on green then putt to within 3 ft - setup finish hole
+Shot 3 Putt 2 - 
+within 3 ft then finish hole
+
+2165 total steps
+
+
+tee target in IRL order yd/remain
+250/143, 140, 195, 140, 235, 200, 260/163, 210/50, 165
+in above layer order
+260/163, 235, 250/143 (175), 165, 200, 140, 195, 140, 210/50
+This is an indication that if the metaphor goes all-in... 
+6 holes are straight shots
+3 are set yourself with shot one then deliver on shot 2
+So I'm thinking like this
+par is 30 strokes
+first hole is a long one with setup and is either 425 / 405 total steps  depending on the IRL order / transposed order
+our tests showed around 400 was nice and stable export ... with almost zero loss with 8bits across the board, but clocking in at 1.50 ish not 1.00 ish... indicating maybe 250/60 steps of one thing then 150ish steps of another might trend that further down  
+and the diminishing returns really flatten things about step 250 
+#2 hole is straight and short, usually a high flyer drive with an iron that can loft the ball high to plant the ball with little roll /carry when it hits the green, transposed, 
+#3 & #5 & #6 are similar 
+4 is similar to #2
+5 is a 200 yard straight shot line drive with a 3/4/5 wood depending on your skill / distance, straight with carry potential to 'get on'
+6 is similar to 3 & 5
+7 is a long slight dog leg to the left, first shot is a line drive to get past the curve and second is a long approach with a bunker in front , no line drive and carry by roll, you want shot 2 to go high and impact crater on the green for zero roll
+8 is 250 yards to setup just off the green for a slight chip , first shot is low, hard with carry possible as there's no obstacles in the way
+hole 9 is a short straight shot over trees, you need loft to get over them and again height to stick it on the green similar to 
+or thats how I would play it the first time ... before player knowledge set in
+
+There is a part of me that says ... walk this training like you were going for a day at fleming 9, though you've never been
+first your stretch reg warmup steps
+then you find out how many balls are in a bucket at the driving range usually 35 / 50
+then the LR_warmup steps = that (meaningful warmup steps that calm the jitters(step 2 spike on defaults)
+drive = 255 , pitch = 145, 4 putt to close, 1 close, next layer
+Numerology nonsense
+Layer order transposed from Handicap
+7,5,1,9,6,2,3,4,8
+6,4,0,8,5,1,2,3,7 if 0 starts the ranking
+par's in layer order
+4,3,4,3,3,3,3,3,4 = 30
+425,235,405,165,200,140,195,140,260 - Blue step count 2165
+395,175,365,145,170,110,165,110,230 - Red Step count 1865
+97/30.7 = 3.159609120521173
+these are all the numbers on the blank scorecard from fleming9
+I am not sure what the 97/30.7 is supposed to indicate ... maybe the handicap evaluation metric of some kind, 
+fm: Checked... it is the method of quick glance 'how difficult is this course... is a medium-ish nonrepeating decimal number though... keep it handy JiC we need something magic as a constant... 
+pm: but I'm wondering if the divided number might be important at some point ... is not pi... a little more than pie ... might be cake, if it is we eat it :D HA! I love past me sometimes:)

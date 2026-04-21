@@ -1,0 +1,288 @@
+:root {
+  --bg: #f6f2e8;
+  --panel: rgba(255, 251, 243, 0.92);
+  --panel-strong: #fffdf8;
+  --ink: #201912;
+  --muted: #75675a;
+  --line: rgba(32, 25, 18, 0.12);
+  --accent: #0d7a5f;
+  --accent-strong: #095845;
+  --code: #1a1510;
+  --code-bg: #f1e6d0;
+  --shadow: 0 18px 50px rgba(53, 39, 24, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at top left, rgba(13, 122, 95, 0.16), transparent 30%),
+    radial-gradient(circle at top right, rgba(209, 93, 47, 0.12), transparent 25%),
+    linear-gradient(180deg, #f7f1e6 0%, #efe6d7 100%);
+}
+
+.shell {
+  min-height: 100vh;
+  padding: 32px;
+}
+
+.hero,
+.pane {
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: var(--panel);
+  box-shadow: var(--shadow);
+}
+
+.hero {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 1.6fr 1fr;
+  padding: 28px;
+  margin-bottom: 24px;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent-strong);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+h1,
+h2 {
+  margin: 0;
+  font-family: "IBM Plex Serif", Georgia, serif;
+}
+
+h1 {
+  font-size: clamp(2rem, 4vw, 3.4rem);
+}
+
+h2 {
+  font-size: 1.35rem;
+}
+
+.subhead {
+  margin: 12px 0 0;
+  max-width: 72ch;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.hero-actions,
+.stack {
+  display: grid;
+  gap: 8px;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(360px, 0.8fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.pane {
+  padding: 22px;
+}
+
+.controls-toolbar {
+  display: flex;
+  gap: 16px;
+  align-items: end;
+  margin-bottom: 20px;
+}
+
+.grow {
+  flex: 1;
+}
+
+input,
+select,
+textarea,
+button {
+  font: inherit;
+}
+
+input[type="text"],
+input[type="search"],
+input[type="number"],
+select {
+  width: 100%;
+  border: 1px solid var(--line);
+  background: var(--panel-strong);
+  color: var(--ink);
+  border-radius: 14px;
+  padding: 12px 14px;
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 6px 4px 0;
+}
+
+.settings-root {
+  display: grid;
+  gap: 16px;
+}
+
+.group {
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.45);
+  overflow: hidden;
+}
+
+.group summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 16px 18px;
+  font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.group summary::-webkit-details-marker {
+  display: none;
+}
+
+.group-description {
+  margin: -4px 18px 14px;
+  color: var(--muted);
+  line-height: 1.45;
+  font-size: 0.95rem;
+}
+
+.group-body {
+  display: grid;
+  gap: 14px;
+  padding: 0 18px 18px;
+}
+
+.field-row {
+  display: grid;
+  gap: 8px;
+}
+
+.field-title {
+  display: block;
+  font-weight: 700;
+}
+
+.field-env,
+.field-help {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.preview {
+  position: sticky;
+  top: 24px;
+  display: grid;
+  gap: 18px;
+}
+
+.preview-card {
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.48);
+  padding: 18px;
+}
+
+.preview-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: start;
+  margin-bottom: 14px;
+}
+
+.button-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.button {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--panel-strong);
+  padding: 10px 14px;
+  cursor: pointer;
+}
+
+.button.primary {
+  background: var(--accent);
+  color: white;
+  border-color: transparent;
+}
+
+.button:hover {
+  transform: translateY(-1px);
+}
+
+.codeblock {
+  margin: 0;
+  padding: 16px;
+  border-radius: 16px;
+  background: var(--code-bg);
+  color: var(--code);
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: "IBM Plex Mono", "SFMono-Regular", monospace;
+  line-height: 1.5;
+}
+
+.codeblock.compact {
+  max-height: 320px;
+}
+
+.profiles-root {
+  display: grid;
+  gap: 10px;
+}
+
+.profile-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 12px 14px;
+  background: var(--panel-strong);
+}
+
+.profile-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+@media (max-width: 1100px) {
+  .hero,
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .preview {
+    position: static;
+  }
+}
