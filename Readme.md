@@ -1,10 +1,24 @@
 One-line status
 ===============
 
-The scratch trainer is no longer just a patched competition script; it is now a generic, layer-aware, schedule-ready, manifesting trainer foundation with synchronized dashboard coverage.
+This challenge closed today, and while I learned alot, and will continue experimenting, I had difficulties aligning my local repo with the online infra used for the challenge, and the challenge period expired before I had meaningful access.  This was an oversight on my part and a learning experience in using runpod as a cloud host.  I was granted additional credits and so I will continue to work on this project on my own initiative.  
+
+Take - aways
+============
+
+The training schedules for the Jetson Orin Nano were especially illuminating, not in a leaderboard sense, but it exposed some power / heat contraints I hadn't seen in running small models on the Jetson previously.  Training steps were handled quite well for the small memory envelope and I wished multiple times that I had opted for the 16gb version instead of the 8gb version as it likely could have handled the training near as well as my 4070 powered PC and likely better than my base model m4 mac mini.
+
+At 8gb the constraints were real though, both on hardware and memory, running headless will be my next trial as I acheived stable results within the memory envelope available ... the heavy workload on validation however lead to the need to schedule power modes along with training steps so as not to trigger power / heat surges on validation and model creation... not a concern I had with any of the other hardware I tried.  The logs I captured using tegra stats and the nvidia power utility will likely prove useful as I continue exploring the constraints on mobile robotics powered by local ai models and their real-world constraints.
+
+One objective was ensuring tracability throughout experimentation, as I am delving into model llm model creation for the first time, taking notes, building tools and dashboards was a large focus, and exposing the workings a main driver, some of the the most valuable artifacts from this set of experiments were the dashboards and scripts developed to test and monitor the process, on windows / wsl / jetpack ubuntu on nvidia hardware / macos.
 
 Branchpoint Summary
 ===================
+TODO: Document Jetson Branch (power /heat)
+TODO: Document MacOS Branch (metal.?)
+TODO: Document SP8192 tokenization / new tokenizer, sliding eval, bigramhash, and other techniques trialed and take-aways
+TODO: Document csv driven stage scheduler and env / txt / md / csv evolution 
+TODO: Upload collected data analysis once completed. All branches.
 
 This scratch branch is now a generic trainer/control-surface branch, not just a competition baseline.
 It exposes the important training, architecture, optimizer, schedule, data, and export surfaces as env-driven controls,
