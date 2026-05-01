@@ -14,11 +14,12 @@ One objective was ensuring tracability throughout experimentation, as I am delvi
 
 Branchpoint Summary
 ===================
-TODO: Document Jetson Branch (power /heat)
-TODO: Document MacOS Branch (metal.?)
-TODO: Document SP8192 tokenization / new tokenizer, sliding eval, bigramhash, and other techniques trialed and take-aways
-TODO: Document csv driven stage scheduler and env / txt / md / csv evolution 
-TODO: Upload collected data analysis once completed. All branches.
+
+- TODO: Document Jetson Branch (power /heat)
+- TODO: Document MacOS Branch (metal.?)
+- TODO: Document SP8192 tokenization / new tokenizer, sliding eval, bigramhash, and other techniques trialed and take-aways
+- TODO: Document csv driven stage scheduler and env / txt / md / csv evolution
+- TODO: Upload collected data analysis once completed. All branches.
 
 This scratch branch is now a generic trainer/control-surface branch, not just a competition baseline.
 It exposes the important training, architecture, optimizer, schedule, data, and export surfaces as env-driven controls,
