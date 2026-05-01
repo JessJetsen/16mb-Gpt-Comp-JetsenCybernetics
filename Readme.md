@@ -10,7 +10,7 @@ The training schedules for the Jetson Orin Nano were especially illuminating, no
 
 At 8gb the constraints were real though, both on hardware and memory, running headless will be my next trial as I acheived stable results within the memory envelope available ... the heavy workload on validation however lead to the need to schedule power modes along with training steps so as not to trigger power / heat surges on validation and model creation... not a concern I had with any of the other hardware I tried.  The logs I captured using tegra stats and the nvidia power utility will likely prove useful as I continue exploring the constraints on mobile robotics powered by local ai models and their real-world constraints.
 
-One objective was ensuring tracability throughout experimentation, as I am delving into model llm model creation for the first time, taking notes, building tools and dashboards was a large focus, and exposing the workings a main driver, some of the the most valuable artifacts from this set of experiments were the dashboards and scripts developed to test and monitor the process, on windows / wsl / jetpack ubuntu on nvidia hardware / macos.
+One objective was ensuring tracability throughout experimentation, as I am delving into llm model creation for the first time:  taking notes, building tools and dashboards was a large focus, and exposing the workings a main driver.  Some of the the most valuable artifacts from this set of experiments were the dashboards and scripts developed to test and monitor the process, on windows / wsl / jetpack ubuntu on nvidia hardware / macos.
 
 Branchpoint Summary
 ===================
